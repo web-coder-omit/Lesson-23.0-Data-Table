@@ -28,7 +28,8 @@ class Persons_Table extends WP_List_Table {
 
 
     function column_cb($item) {
-        return sprintf('<input type="checkbox" name="person[]" value="%s">', $item['id']);
+        // return sprintf('<input type="checkbox" name="person[]" value="%s">', $item['id']);
+        return "<input type='checkbox' value='{$item['id']}'/>";
     }
 }
 ?>

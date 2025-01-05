@@ -30,10 +30,19 @@ function database_admin_page(){
         'datatable_dipalay_table'        
     );
 }
-
-
+function datatable_search_by_name($item){
+    $name = strtolower($item['name']);
+    $search_name = sanitize_text_field($_REQUEST['s']);
+    if(strpos($name, $search_name) !== false) {
+        return true;
+    }
+    return false;
+}
 function datatable_dipalay_table(){
     include_once "data.php";
+        if( isset($_REQUEST['s']))  {
+            $data = array_filter($data, 'datatable_search_by_name');
+        }
     $table = new Persons_Table();
     $table -> set_data($data);
     $table-> prepare_items();
@@ -45,7 +54,7 @@ function datatable_dipalay_table(){
              $table-> search_box('search','search_id');
              $table-> display();
             ?>
-
+            <input type="hidden" name="page" value="<?php echo $_REQUEST['page'];?>"/>
         </form>
     </div>
     <?php
